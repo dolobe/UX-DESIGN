@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produits Leclerc</title>
+    <style>
+        #products-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .product {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 5px 0;
+        }
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .pagination a {
+            padding: 8px 16px;
+            margin: 0 4px;
+            text-decoration: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 4px;
+        }
+        .pagination a.disabled {
+            background-color: #ddd;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Liste des Produits</h1>
+    
+    <ul id="products-list">
+        {% for product in products %}
+            <li class="product">
+                image: {{ product.image }}<br>
+                <strong>{{ product.name }}</strong><br>
+                Price: {{ product.price }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <div class="pagination">
+        {% if page > 1 %}
+            <a href="/products?page={{ page - 1 }}">Précédent</a>
+        {% else %}
+            <a href="#" class="disabled">Précédent</a>
+        {% endif %}
+
+        {% for p in range(1, total_pages + 1) %}
+            <a href="/products?page={{ p }}" class="{{ 'disabled' if p == page else '' }}">{{ p }}</a>
+        {% endfor %}
+
+        {% if page < total_pages %}
+            <a href="/products?page={{ page + 1 }}">Suivant</a>
+        {% else %}
+            <a href="#" class="disabled">Suivant</a>
+        {% endif %}
+    </div>
+
+</body>
+</html>
